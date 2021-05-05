@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+        <!-- Do not cache this web page -->
+        <meta http-equiv= "cache-control" content= "no-cache, no-store, must-revalidate"> <!-- for HTTP 1.1 -->
+        <meta http-equiv= "pragma" content= "no-cache"> <!-- for HTTP 1.0 -->
+        <meta http-equiv= "expires" content= "0"> <!-- for proxies -->
+        <!-- Go on -->
+        <title>Student Notes Computation</title>
+		<meta charset="UTF-8">
+		<!-- Test JavaScript -->
+		<noscript>Your browser does not support Javascript.</noscript>
+		<!-- Import JQuery library -->
+        <script  type="text/javascript" src="jquery-3.6.0.min.js"></script>
+    </head>
+	<body>
+        <form>
+            <fieldset>
+                <legend>Student Notes (0..20)</legend>
+                <label>Note 1:</label>
+                <input type="range" id="nb1Id" name="nb1Id" min="0" max="20" value="10" step="1">   
+                <label>Note 2:</label>
+                <input type="range" id="nb2Id" name="nb2Id" min="0" max="20" value="10" step="1">   
+                <label>Note 3:</label>
+                <input type="range" id="nb3Id" name="nb3Id" min="0" max="20" value="10" step="1">   
+                <label>Note 4:</label>
+                <input type="range" id="nb4Id" name="nb4Id" min="0" max="20" value="10" step="1">   
+                <label>Note 5:</label>
+                <input type="range" id="nb5Id" name="nb5Id" min="0" max="20" value="10" step="1">   
+            </fieldset>
+            <button type="button" onclick="Computation()">Compute</button>
+            <button type="button" onclick="resetComputation()">CleanUp</button>
+            <p>Moyenne     : <span id="averageId">...</span></p>
+            <p>Appreciation: <span id="judgementId">...</span></p>
+        </form>
+        <script type="text/javascript">
+             function resetComputation()
+            {
+                let maxNoteNb=5;
+                $("#averageId").text("...");
+                $("#judgementId").text("...");
+                for( let idx=1; idx <= maxNoteNb; idx++)
+                    {
+                    tagIdx=`#nb${idx}Id`;
+                    $(tagIdx).val(10); 
+                    }
+            }
+            function averageComputation()
+            {
+                let maxNoteNb= 5;
+                let answer= 0;
+                let tagIdx;
+                for ( let idx=1; idx <= maxNoteNb; idx++)
+                    {
+                    tagIdx=`#nb${idx}Id`;
+                    answer += parseInt($(tagIdx).val());
+                    }
+                return answer/maxNoteNb;
+            }
+            function getJudgement( note)
+            {
+                if (note < 10)
+                    {
+                    return "En dessous de la moyenne";
+                    }
+                if ( note < 13)
+                    {
+                    return "Moyen";
+                    }
+                if (note < 16)
+                    {
+                    return "Bien";
+                    }
+                if (note <20)
+                    {
+                    return "Très bien";
+                    }
+                return "Exellent";
+            }
+            function Computation()
+            {
+                let averageNote = averageComputation();
+                let averageJudgement= getJudgement(averageNote);
+                $("#averageId").text(averageNote);
+                $("#judgementId").text(averageJudgement);
+            }
+        </script>
+    </body>
+</html>
